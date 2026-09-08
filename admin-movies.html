@@ -244,6 +244,7 @@
     .admin-menu {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 8px;
       margin-bottom: 28px;
     }
@@ -268,48 +269,6 @@
       background-color: #fb2c36;
       border-color: #fb2c36;
       color: #ffffff;
-    }
-
-    .scan-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      margin-left: auto;
-      border-radius: 50%;
-      background-color: #fb2c36;
-      color: #ffffff;
-      cursor: pointer;
-    }
-
-    .scan-button:hover {
-      background-color: #e7000b;
-    }
-
-    .scan-button svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    /* The camera box */
-
-    .camera-panel {
-      text-align: center;
-    }
-
-    .camera-video {
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto 12px auto;
-      border-radius: 16px;
-      background-color: #101828;
-    }
-
-    .camera-message {
-      color: #6a7282;
-      font-size: 14px;
-      margin-bottom: 16px;
     }
 
     .hidden {
@@ -572,23 +531,8 @@
     <nav class="admin-menu">
       <a href="admin.html">Staff Dashboard</a>
       <a href="admin-movies.html" class="current">Movies</a>
-
-      <span class="scan-button" id="scan-button" title="Scan a ticket QR code">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-          <circle cx="12" cy="13" r="4"></circle>
-        </svg>
-      </span>
+      <a href="admin-scanner.html">Ticket Scanner</a>
     </nav>
-
-    <!-- THE CAMERA -->
-    <div class="panel camera-panel hidden" id="camera-panel">
-      <h2>Ticket scanner</h2>
-      <p class="panel-note">Point the camera at the QR code on the ticket</p>
-      <video class="camera-video" id="camera-video" autoplay playsinline></video>
-      <p class="camera-message" id="camera-message"></p>
-      <button class="button button-outline" id="close-camera" type="button">Close camera</button>
-    </div>
 
     <!-- Counts -->
     <div class="stat-row">
@@ -801,134 +745,6 @@
   </main>
 
   <script>
-
-    var scanButton = document.getElementById("scan-button");
-    var cameraPanel = document.getElementById("camera-panel");
-    var cameraVideo = document.getElementById("camera-video");
-    var cameraMessage = document.getElementById("camera-message");
-    var closeCamera = document.getElementById("close-camera");
-    var cameraStream = null;
-
-    // Open the camera when the round button is clicked
-    scanButton.onclick = function () {
-      cameraPanel.classList.remove("hidden");
-
-      if (!navigator.mediaDevices) {
-        cameraMessage.textContent = "The camera only works when the page is opened through a web address such as http://localhost:8000";
-        return;
-      }
-
-      stopCamera();
-      cameraMessage.textContent = "Starting the camera";
-
-      // Ask for the back camera. Phones call that one the "environment" camera.
-      navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } })
-        .then(showCamera)
-        .catch(function () {
-          // Some phone browsers turn down an exact request, and a device with only
-          // one camera always does, so open any camera and then look for a back one
-          return navigator.mediaDevices.getUserMedia({ video: true }).then(swapToBackCamera);
-        })
-        .catch(function (error) {
-          cameraMessage.textContent = "The camera could not be opened: " + error.message;
-        });
-    };
-
-    // Trade the camera that opened for the back camera when the device has one
-    function swapToBackCamera(stream) {
-      if (facesAway(stream.getVideoTracks()[0])) {
-        showCamera(stream);
-        return;
-      }
-
-      return navigator.mediaDevices.enumerateDevices().then(function (devices) {
-        var backCamera = findBackCamera(devices);
-
-        if (backCamera === null) {
-          // A laptop, or a phone with no back camera, keeps the camera it opened
-          showCamera(stream);
-          return;
-        }
-
-        // Some phones allow only one camera at a time, so let go of this one first
-        stopStream(stream);
-
-        return navigator.mediaDevices
-          .getUserMedia({ video: { deviceId: { exact: backCamera.deviceId } } })
-          .then(showCamera)
-          .catch(function () {
-            // The back camera would not open after all, so go back to any camera
-            return navigator.mediaDevices.getUserMedia({ video: true }).then(showCamera);
-          });
-      });
-    }
-
-    // Look through the cameras for one whose name says it faces away from you
-    function findBackCamera(devices) {
-      for (var i = 0; i < devices.length; i++) {
-        if (devices[i].kind === "videoinput" && nameSaysBack(devices[i].label)) {
-          return devices[i];
-        }
-      }
-
-      return null;
-    }
-
-    // Decide whether a camera track is the back camera
-    function facesAway(track) {
-      var settings = track.getSettings ? track.getSettings() : {};
-
-      if (settings.facingMode === "environment") {
-        return true;
-      }
-
-      if (settings.facingMode === "user") {
-        return false;
-      }
-
-      return nameSaysBack(track.label);
-    }
-
-    // Camera names differ between phones, so check the words they have in common
-    function nameSaysBack(label) {
-      var name = String(label).toLowerCase();
-
-      return name.indexOf("back") !== -1 || name.indexOf("rear") !== -1 || name.indexOf("environment") !== -1;
-    }
-
-    // Put the camera picture on the screen
-    function showCamera(stream) {
-      cameraStream = stream;
-      cameraVideo.srcObject = stream;
-      cameraMessage.textContent = facesAway(stream.getVideoTracks()[0])
-        ? "Back camera is on"
-        : "Camera is on. This device has no back camera.";
-    }
-
-    // Turn the camera off again and hide the box
-    closeCamera.onclick = function () {
-      stopCamera();
-      cameraPanel.classList.add("hidden");
-    };
-
-    // Switch off whichever camera is running
-    function stopCamera() {
-      if (cameraStream !== null) {
-        stopStream(cameraStream);
-        cameraStream = null;
-      }
-
-      cameraVideo.srcObject = null;
-    }
-
-    // Switch off every track a stream holds
-    function stopStream(stream) {
-      var tracks = stream.getTracks();
-
-      for (var i = 0; i < tracks.length; i++) {
-        tracks[i].stop();
-      }
-    }
 
   </script>
   <!-- Footer -->

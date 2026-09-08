@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Scanner - Cinemax</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* Styles that every page of the website uses */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f9fafb;
+      color: #101828;
+      font-family: 'Outfit', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: #fb2c36;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* Buttons */
+
+    .button {
+      display: inline-block;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button-red {
+      background-color: #fb2c36;
+      color: #ffffff;
+    }
+
+    .button-red:hover {
+      background-color: #e7000b;
+    }
+
+    .button-outline {
+      background-color: #ffffff;
+      color: #101828;
+      border: 1px solid #e5e7eb;
+      font-weight: 600;
+    }
+
+    .button-outline:hover {
+      background-color: #f9fafb;
+    }
+
+    .button-grey {
+      background-color: #e5e7eb;
+      color: #99a1af;
+    }
+
+    .button-wide {
+      display: block;
+      width: 100%;
+    }
+
+    /* Top bar */
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: #ffffff;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .top-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      max-width: 1280px;
+      width: 96%;
+      height: 64px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      color: #101828;
+      font-size: 20px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .menu {
+      display: flex;
+      gap: 2px;
+    }
+
+    .menu a {
+      padding: 8px 16px;
+      border-radius: 12px;
+      color: #6a7282;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .menu a:hover {
+      background-color: #f9fafb;
+      color: #101828;
+    }
+
+    .menu a.current {
+      background-color: #fef2f2;
+      color: #fb2c36;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Footer */
+
+    .site-footer {
+      background-color: #ffffff;
+      border-top: 1px solid #e5e7eb;
+      padding: 36px 20px 28px 20px;
+    }
+
+    .footer-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-inner .logo {
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .footer-text {
+      color: #6a7282;
+      font-size: 13px;
+    }
+
+    .footer-copyright {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #f3f4f6;
+      color: #99a1af;
+      font-size: 12px;
+    }
+
+    @media (max-width: 620px) {
+      .top-bar-inner {
+        width: 94%;
+        height: 58px;
+        gap: 4px;
+      }
+
+      .logo {
+        font-size: 15px;
+      }
+
+      .menu a {
+        padding: 6px 5px;
+        font-size: 12px;
+      }
+
+      .auth-buttons .button {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .menu a,
+      .auth-buttons .button {
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .logo {
+        font-size: 14px;
+      }
+
+      .menu a {
+        padding: 6px 2px;
+        font-size: 11px;
+      }
+
+      .auth-buttons .button {
+        padding: 7px 10px;
+        font-size: 12px;
+      }
+    }
+
+    /* Styles used on the two staff pages */
+
+    .admin-page {
+      max-width: 900px;
+      width: 92%;
+      margin: 0 auto;
+      padding: 40px 0 64px 0;
+    }
+
+    .admin-page h1 {
+      font-size: 32px;
+      margin-bottom: 6px;
+    }
+
+    .admin-intro {
+      color: #6a7282;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    /* The staff menu */
+
+    .admin-menu {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .admin-menu a {
+      padding: 10px 18px;
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      color: #6a7282;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .admin-menu a:hover {
+      border-color: #fb2c36;
+      color: #fb2c36;
+    }
+
+    .admin-menu a.current {
+      background-color: #fb2c36;
+      border-color: #fb2c36;
+      color: #ffffff;
+    }
+
+    /* The camera box */
+
+    .camera-panel {
+      text-align: center;
+    }
+
+    .camera-video {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto 12px auto;
+      border-radius: 16px;
+      background-color: #101828;
+    }
+
+    .camera-message {
+      color: #6a7282;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    /* The answer the scanner gives about a ticket */
+
+    .scan-result {
+      max-width: 420px;
+      margin: 0 auto 12px auto;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .scan-result-good {
+      background-color: #dcfce7;
+      color: #008236;
+    }
+
+    .scan-result-used {
+      background-color: #fef9c2;
+      color: #a65f00;
+    }
+
+    .scan-result-bad {
+      background-color: #ffe2e2;
+      color: #c10007;
+    }
+
+    .scan-result-who {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* The white boxes */
+
+    .panel {
+      padding: 24px;
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+
+    .panel h2 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .panel-note {
+      color: #6a7282;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="top-bar">
+    <div class="top-bar-inner">
+
+      <a class="logo" href="index.html">CINEMAX</a>
+
+      <nav class="menu">
+        <a href="index.html#now-showing">Now Showing</a>
+        <a href="index.html#coming-soon">Upcoming Shows</a>
+        <!-- Staff page link, hidden from customers
+        <a href="admin.html">Admin</a>
+        -->
+      </nav>
+
+      <div class="auth-buttons">
+        <a class="button button-red" href="signup.html">Sign Up</a>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="admin-page">
+
+    <h1>Ticket Scanner</h1>
+    <p class="admin-intro">Check tickets at the door.</p>
+
+    <!-- Staff menu -->
+    <nav class="admin-menu">
+      <a href="admin.html">Staff Dashboard</a>
+      <a href="admin-movies.html">Movies</a>
+      <a href="admin-scanner.html" class="current">Ticket Scanner</a>
+    </nav>
+
+    <!-- THE CAMERA -->
+    <div class="panel camera-panel">
+      <p class="panel-note">Point the camera at the QR code on the ticket</p>
+      <video class="camera-video" id="camera-video" autoplay playsinline></video>
+      <p class="scan-result hidden" id="scan-result"></p>
+      <p class="camera-message" id="camera-message"></p>
+      <button class="button button-red" id="start-camera" type="button">Start camera</button>
+      <button class="button button-outline hidden" id="close-camera" type="button">Close camera</button>
+    </div>
+
+  </main>
+
+  <!-- Reads QR codes out of the camera picture -->
+  <script src="js/jsQR.js"></script>
+
+  <script>
+
+    var cameraVideo = document.getElementById("camera-video");
+    var cameraMessage = document.getElementById("camera-message");
+    var scanResult = document.getElementById("scan-result");
+    var startCamera = document.getElementById("start-camera");
+    var closeCamera = document.getElementById("close-camera");
+    var cameraStream = null;
+
+    // The bookings the door scanner accepts
+    var tickets = [
+      { code: "CX-8F3K92LM", name: "Juan Dela Cruz" },
+      { code: "CX-2B7Q41XT", name: "Maria Santos" },
+      { code: "CX-9H5V63PD", name: "Ana Reyes" },
+      { code: "CX-4C8N27RB", name: "Mark Villanueva" },
+      { code: "CX-6J1T95WF", name: "Liza Bautista" }
+    ];
+
+    // Tickets that have already come through the door today
+    var usedTickets = [];
+
+    // The camera starts on its own, because this page is only for scanning
+    openCamera();
+
+    startCamera.onclick = openCamera;
+
+    closeCamera.onclick = function () {
+      stopCamera();
+      cameraMessage.textContent = "Camera is off";
+    };
+
+    /* Turning the camera on */
+
+    function openCamera() {
+      if (!navigator.mediaDevices) {
+        cameraMessage.textContent = "The camera only works when the page is opened through a web address such as http://localhost:8000";
+        return;
+      }
+
+      stopCamera();
+      cameraMessage.textContent = "Starting the camera";
+
+      // Ask for the back camera. Phones call that one the "environment" camera.
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } })
+        .then(showCamera)
+        .catch(function () {
+          // Some phone browsers turn down an exact request, and a device with only
+          // one camera always does, so open any camera and then look for a back one
+          return navigator.mediaDevices.getUserMedia({ video: true }).then(swapToBackCamera);
+        })
+        .catch(function (error) {
+          cameraMessage.textContent = "The camera could not be opened: " + error.message;
+        });
+    }
+
+    // Trade the camera that opened for the back camera when the device has one
+    function swapToBackCamera(stream) {
+      if (facesAway(stream.getVideoTracks()[0])) {
+        showCamera(stream);
+        return;
+      }
+
+      return navigator.mediaDevices.enumerateDevices().then(function (devices) {
+        var backCamera = findBackCamera(devices);
+
+        if (backCamera === null) {
+          // A laptop, or a phone with no back camera, keeps the camera it opened
+          showCamera(stream);
+          return;
+        }
+
+        // Some phones allow only one camera at a time, so let go of this one first
+        stopStream(stream);
+
+        return navigator.mediaDevices
+          .getUserMedia({ video: { deviceId: { exact: backCamera.deviceId } } })
+          .then(showCamera)
+          .catch(function () {
+            // The back camera would not open after all, so go back to any camera
+            return navigator.mediaDevices.getUserMedia({ video: true }).then(showCamera);
+          });
+      });
+    }
+
+    // Look through the cameras for one whose name says it faces away from you
+    function findBackCamera(devices) {
+      for (var i = 0; i < devices.length; i++) {
+        if (devices[i].kind === "videoinput" && nameSaysBack(devices[i].label)) {
+          return devices[i];
+        }
+      }
+
+      return null;
+    }
+
+    // Decide whether a camera track is the back camera
+    function facesAway(track) {
+      var settings = track.getSettings ? track.getSettings() : {};
+
+      if (settings.facingMode === "environment") {
+        return true;
+      }
+
+      if (settings.facingMode === "user") {
+        return false;
+      }
+
+      return nameSaysBack(track.label);
+    }
+
+    // Camera names differ between phones, so check the words they have in common
+    function nameSaysBack(label) {
+      var name = String(label).toLowerCase();
+
+      return name.indexOf("back") !== -1 || name.indexOf("rear") !== -1 || name.indexOf("environment") !== -1;
+    }
+
+    // Put the camera picture on the screen and start looking for QR codes
+    function showCamera(stream) {
+      cameraStream = stream;
+      cameraVideo.srcObject = stream;
+      cameraMessage.textContent = facesAway(stream.getVideoTracks()[0])
+        ? "Back camera is on. Hold a ticket up to it."
+        : "Camera is on. This device has no back camera.";
+
+      startCamera.classList.add("hidden");
+      closeCamera.classList.remove("hidden");
+      startReading();
+    }
+
+    /* Turning the camera off */
+
+    function stopCamera() {
+      stopReading();
+      clearAnswer();
+
+      if (cameraStream !== null) {
+        stopStream(cameraStream);
+        cameraStream = null;
+      }
+
+      cameraVideo.srcObject = null;
+      startCamera.classList.remove("hidden");
+      closeCamera.classList.add("hidden");
+    }
+
+    // Switch off every track a stream holds
+    function stopStream(stream) {
+      var tracks = stream.getTracks();
+
+      for (var i = 0; i < tracks.length; i++) {
+        tracks[i].stop();
+      }
+    }
+
+    /* Reading the QR code on a ticket */
+
+    var readingTimer = null;
+    var waitUntil = 0;
+    var scanCanvas = document.createElement("canvas");
+    var scanPad = scanCanvas.getContext("2d", { willReadFrequently: true });
+
+    // Look at the camera picture ten times a second
+    function startReading() {
+      stopReading();
+      readingTimer = setInterval(readPicture, 100);
+    }
+
+    function stopReading() {
+      if (readingTimer !== null) {
+        clearInterval(readingTimer);
+        readingTimer = null;
+      }
+
+      waitUntil = 0;
+    }
+
+    // Copy one camera picture and hand it to the QR reader
+    function readPicture() {
+      // After an answer, hold it on screen before reading again
+      if (Date.now() < waitUntil) {
+        return;
+      }
+
+      // The camera needs a moment before it has a picture to give
+      if (cameraVideo.readyState < 2 || cameraVideo.videoWidth === 0) {
+        return;
+      }
+
+      if (typeof jsQR !== "function") {
+        cameraMessage.textContent = "The QR reader did not load, so js/jsQR.js may be missing";
+        stopReading();
+        return;
+      }
+
+      scanCanvas.width = cameraVideo.videoWidth;
+      scanCanvas.height = cameraVideo.videoHeight;
+      scanPad.drawImage(cameraVideo, 0, 0, scanCanvas.width, scanCanvas.height);
+
+      var picture = scanPad.getImageData(0, 0, scanCanvas.width, scanCanvas.height);
+      var found = jsQR(picture.data, picture.width, picture.height, { inversionAttempts: "dontInvert" });
+
+      if (found !== null) {
+        checkTicket(found.data);
+        waitUntil = Date.now() + 2500;
+      }
+    }
+
+    /* Deciding what a ticket code means */
+
+    function checkTicket(text) {
+      var code = tidyCode(text);
+      var booking = findTicket(code);
+
+      if (booking === null) {
+        showAnswer("bad", "Try again", "That code is not a Cinemax ticket");
+        return;
+      }
+
+      if (usedTickets.indexOf(code) !== -1) {
+        showAnswer("used", "Ticket already used", booking.name + " • " + code);
+        return;
+      }
+
+      usedTickets.push(code);
+      showAnswer("good", "Confirmed booking", booking.name + " • " + code);
+    }
+
+    // A ticket prints its code as CINEMAX:CX-0000000, but the plain number is fine too
+    function tidyCode(text) {
+      var code = String(text).trim().toUpperCase();
+
+      if (code.indexOf("CINEMAX:") === 0) {
+        code = code.substring(8);
+      }
+
+      return code.trim();
+    }
+
+    // Look for the code in the list of bookings
+    function findTicket(code) {
+      for (var i = 0; i < tickets.length; i++) {
+        if (tickets[i].code === code) {
+          return tickets[i];
+        }
+      }
+
+      return null;
+    }
+
+    // Show the answer in green, yellow or red under the camera
+    function showAnswer(kind, heading, detail) {
+      scanResult.className = "scan-result scan-result-" + kind;
+      scanResult.textContent = heading;
+
+      var line = document.createElement("span");
+      line.className = "scan-result-who";
+      line.textContent = detail;
+      scanResult.appendChild(line);
+    }
+
+    // Clear the answer, ready for the next ticket
+    function clearAnswer() {
+      scanResult.className = "scan-result hidden";
+      scanResult.textContent = "";
+    }
+
+  </script>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <a class="logo" href="index.html">CINEMAX</a>
+
+      <p class="footer-text">
+        Your next movie experience starts here. <br>
+        Book your seats, enjoy your snacks, and let the show begin.
+      </p>
+
+      <p class="footer-copyright">© 2026 Cinemax. All rights reserved.</p>
+
+    </div>
+  </footer>
+
+
+</body>
+</html>
