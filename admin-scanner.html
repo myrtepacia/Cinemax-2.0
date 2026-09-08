@@ -324,6 +324,15 @@
       margin-top: 2px;
     }
 
+    /* The buttons staff press once they have looked at the ticket */
+
+    .scan-actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
     .hidden {
       display: none;
     }
@@ -390,6 +399,12 @@
       <p class="panel-note">Point the camera at the QR code on the ticket</p>
       <video class="camera-video" id="camera-video" autoplay playsinline></video>
       <p class="scan-result hidden" id="scan-result"></p>
+
+      <div class="scan-actions hidden" id="scan-actions">
+        <button class="button button-red" id="confirm-booking" type="button">Confirm booking</button>
+        <button class="button button-outline" id="cancel-booking" type="button">Cancel</button>
+      </div>
+
       <p class="camera-message" id="camera-message"></p>
       <button class="button button-red" id="start-camera" type="button">Start camera</button>
       <button class="button button-outline hidden" id="close-camera" type="button">Close camera</button>
@@ -405,6 +420,9 @@
     var cameraVideo = document.getElementById("camera-video");
     var cameraMessage = document.getElementById("camera-message");
     var scanResult = document.getElementById("scan-result");
+    var scanActions = document.getElementById("scan-actions");
+    var confirmBooking = document.getElementById("confirm-booking");
+    var cancelBooking = document.getElementById("cancel-booking");
     var startCamera = document.getElementById("start-camera");
     var closeCamera = document.getElementById("close-camera");
     var cameraStream = null;
@@ -420,6 +438,9 @@
 
     // Tickets that have already come through the door today
     var usedTickets = [];
+
+    // The ticket on screen that is waiting for staff to press Confirm booking
+    var waitingFor = null;
 
     // The camera starts on its own, because this page is only for scanning
     openCamera();
@@ -614,6 +635,10 @@
       var code = tidyCode(text);
       var booking = findTicket(code);
 
+      // A new answer replaces whatever was waiting on screen before it
+      waitingFor = null;
+      scanActions.classList.add("hidden");
+
       if (booking === null) {
         showAnswer("bad", "Try again", "That code is not a Cinemax ticket");
         return;
@@ -624,8 +649,39 @@
         return;
       }
 
-      usedTickets.push(code);
+      // A good ticket is not used up yet. Staff look at the person in front of
+      // them and press Confirm booking, and only then does it count as used.
+      waitingFor = booking;
       showAnswer("good", "Confirmed booking", booking.name + " • " + code);
+      scanActions.classList.remove("hidden");
+      stopReading();
+    }
+
+    // Staff pressed Confirm booking, so the ticket is used from now on
+    confirmBooking.onclick = function () {
+      if (waitingFor === null) {
+        return;
+      }
+
+      usedTickets.push(waitingFor.code);
+      showAnswer("good", "Ticket used", waitingFor.name + " • " + waitingFor.code);
+      goBackToScanning();
+    };
+
+    // Staff pressed Cancel, so the ticket is left alone and can be scanned again
+    cancelBooking.onclick = function () {
+      clearAnswer();
+      goBackToScanning();
+    };
+
+    // Put the buttons away and start looking for the next ticket
+    function goBackToScanning() {
+      waitingFor = null;
+      scanActions.classList.add("hidden");
+      startReading();
+
+      // Give staff a moment to move the ticket away from the camera
+      waitUntil = Date.now() + 2500;
     }
 
     // A ticket prints its code as CINEMAX:CX-0000000, but the plain number is fine too
@@ -665,6 +721,8 @@
     function clearAnswer() {
       scanResult.className = "scan-result hidden";
       scanResult.textContent = "";
+      scanActions.classList.add("hidden");
+      waitingFor = null;
     }
 
   </script>
