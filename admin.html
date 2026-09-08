@@ -746,34 +746,117 @@
         return;
       }
 
+      stopCamera();
       cameraMessage.textContent = "Starting the camera";
 
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function (stream) {
-          cameraStream = stream;
-          cameraVideo.srcObject = stream;
-          cameraMessage.textContent = "Camera is on";
+      // Ask for the back camera. Phones call that one the "environment" camera.
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } })
+        .then(showCamera)
+        .catch(function () {
+          // Some phone browsers turn down an exact request, and a device with only
+          // one camera always does, so open any camera and then look for a back one
+          return navigator.mediaDevices.getUserMedia({ video: true }).then(swapToBackCamera);
         })
         .catch(function (error) {
           cameraMessage.textContent = "The camera could not be opened: " + error.message;
         });
     };
 
-    // Turn the camera off again and hide the box
-    closeCamera.onclick = function () {
-      if (cameraStream !== null) {
-        var tracks = cameraStream.getTracks();
+    // Trade the camera that opened for the back camera when the device has one
+    function swapToBackCamera(stream) {
+      if (facesAway(stream.getVideoTracks()[0])) {
+        showCamera(stream);
+        return;
+      }
 
-        for (var j = 0; j < tracks.length; j++) {
-          tracks[j].stop();
+      return navigator.mediaDevices.enumerateDevices().then(function (devices) {
+        var backCamera = findBackCamera(devices);
+
+        if (backCamera === null) {
+          // A laptop, or a phone with no back camera, keeps the camera it opened
+          showCamera(stream);
+          return;
         }
 
+        // Some phones allow only one camera at a time, so let go of this one first
+        stopStream(stream);
+
+        return navigator.mediaDevices
+          .getUserMedia({ video: { deviceId: { exact: backCamera.deviceId } } })
+          .then(showCamera)
+          .catch(function () {
+            // The back camera would not open after all, so go back to any camera
+            return navigator.mediaDevices.getUserMedia({ video: true }).then(showCamera);
+          });
+      });
+    }
+
+    // Look through the cameras for one whose name says it faces away from you
+    function findBackCamera(devices) {
+      for (var i = 0; i < devices.length; i++) {
+        if (devices[i].kind === "videoinput" && nameSaysBack(devices[i].label)) {
+          return devices[i];
+        }
+      }
+
+      return null;
+    }
+
+    // Decide whether a camera track is the back camera
+    function facesAway(track) {
+      var settings = track.getSettings ? track.getSettings() : {};
+
+      if (settings.facingMode === "environment") {
+        return true;
+      }
+
+      if (settings.facingMode === "user") {
+        return false;
+      }
+
+      return nameSaysBack(track.label);
+    }
+
+    // Camera names differ between phones, so check the words they have in common
+    function nameSaysBack(label) {
+      var name = String(label).toLowerCase();
+
+      return name.indexOf("back") !== -1 || name.indexOf("rear") !== -1 || name.indexOf("environment") !== -1;
+    }
+
+    // Put the camera picture on the screen
+    function showCamera(stream) {
+      cameraStream = stream;
+      cameraVideo.srcObject = stream;
+      cameraMessage.textContent = facesAway(stream.getVideoTracks()[0])
+        ? "Back camera is on"
+        : "Camera is on. This device has no back camera.";
+    }
+
+    // Turn the camera off again and hide the box
+    closeCamera.onclick = function () {
+      stopCamera();
+      cameraPanel.classList.add("hidden");
+    };
+
+    // Switch off whichever camera is running
+    function stopCamera() {
+      if (cameraStream !== null) {
+        stopStream(cameraStream);
         cameraStream = null;
       }
 
       cameraVideo.srcObject = null;
-      cameraPanel.classList.add("hidden");
-    };
+    }
+
+    // Switch off every track a stream holds
+    function stopStream(stream) {
+      var tracks = stream.getTracks();
+
+      for (var i = 0; i < tracks.length; i++) {
+        tracks[i].stop();
+      }
+    }
 
   </script>
   <!-- Footer -->
