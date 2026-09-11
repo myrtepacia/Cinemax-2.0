@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirming Payment - Cinemax</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cinemax.css">
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <a class="logo" href="index.html">CINEMAX</a>
+      <nav class="menu">
+        <a href="index.html#now-showing">Now Showing</a>
+        <a href="index.html#coming-soon">Upcoming Shows</a>
+        <a href="account.html">My Bookings</a>
+      </nav>
+      <div class="auth-buttons">
+        <button class="button button-red" type="button" id="sign-out">Sign Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="confirming-page">
+
+    <div class="spinner" id="spinner"></div>
+
+    <h1 id="heading">Confirming your payment</h1>
+    <p class="form-intro" id="detail">This usually takes a few seconds. Please do not close this page.</p>
+
+    <p class="form-message form-message-notice hidden" id="page-message">
+      This is taking longer than usual. Your payment is safe &mdash; press Check again in a moment.
+    </p>
+
+    <div class="ticket-actions hidden" id="actions">
+      <a class="button button-outline" href="index.html">Back to Movies</a>
+      <button class="button button-red" type="button" id="check-again">Check again</button>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="logo" href="index.html">CINEMAX</a>
+      <p class="footer-text">
+        Your next movie experience starts here. <br>
+        Book your seats, enjoy your snacks, and let the show begin.
+      </p>
+      <p class="footer-copyright">&copy; 2026 Cinemax. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+</body>
+</html>

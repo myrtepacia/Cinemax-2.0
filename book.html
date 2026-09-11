@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Tickets - Cinemax</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cinemax.css">
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <a class="logo" href="index.html">CINEMAX</a>
+      <nav class="menu">
+        <a href="index.html#now-showing">Now Showing</a>
+        <a href="index.html#coming-soon">Upcoming Shows</a>
+        <a href="account.html">My Bookings</a>
+      </nav>
+      <div class="auth-buttons">
+        <button class="button button-red" type="button" id="sign-out">Sign Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="booking">
+
+    <a class="back-link" href="index.html">&larr; Back to movies</a>
+
+    <p class="loading-note hidden" id="page-loading">Loading this movie&hellip;</p>
+
+    <div class="booking-layout" id="booking-layout">
+
+      <div class="booking-left">
+
+        <img class="booking-poster" id="poster"
+             src="photo/Joker.jpg" alt="Joker poster"
+             width="900" height="1200" fetchpriority="high" decoding="async">
+
+        <div class="booking-block">
+          <h1 class="film-title" id="film-title">Joker</h1>
+          <p class="film-details" id="film-details">Crime, Thriller, 2h 2m, R-16</p>
+        </div>
+
+        <div class="booking-block">
+          <label class="field-label" for="date">Date</label>
+          <select class="dropdown" id="date">
+            <option value="">Choose a date</option>
+            <option value="2026-09-12">Sat, 12 Sep</option>
+            <option value="2026-09-13">Sun, 13 Sep</option>
+            <option value="2026-09-14">Mon, 14 Sep</option>
+          </select>
+        </div>
+
+        <div class="booking-block">
+          <label class="field-label" for="showtime">Showtime</label>
+          <select class="dropdown" id="showtime">
+            <option value="">Choose a showtime</option>
+            <option value="101" data-date="2026-09-12" data-taken="A4,B5,B6,D3,E8">1:00 PM</option>
+            <option value="102" data-date="2026-09-12" data-taken="C1,C2,C3,D6,D7,E1,E2,F9">4:00 PM</option>
+            <option value="103" data-date="2026-09-12" data-taken="FULL-BUT-SIX">7:00 PM</option>
+            <option value="104" data-date="2026-09-12" data-taken="ALL">10:00 PM</option>
+            <option value="105" data-date="2026-09-13" data-taken="A1,A2,G9,G10">1:00 PM</option>
+            <option value="106" data-date="2026-09-13" data-taken="B3,B4,C7,C8,D1,E5">5:30 PM</option>
+            <option value="107" data-date="2026-09-14" data-taken="">8:00 PM</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="seat-area">
+
+        <p class="pick-first" id="pick-first">
+          Choose a date and a showtime to see the seats and the snacks
+        </p>
+
+        <div class="hidden" id="seats-and-snacks">
+
+          <h3>Choose Your Seats</h3>
+
+          <div class="screen-curve"></div>
+          <p class="screen-word">SCREEN</p>
+
+          <p class="loading-note hidden" id="seats-loading">Checking which seats are free&hellip;</p>
+
+          <div class="seat-map" id="seat-map">
+
+            <div class="seat-row">
+
+              <span class="row-letter">A</span>
+
+              <label class="seat">
+                <input type="checkbox" value="A1">
+                <span class="seat-box">1</span>
+              </label>
+
+              <label class="seat"><input type="checkbox" value="A2"><span class="seat-box">2</span></label>
+              <label class="seat"><input type="checkbox" value="A3"><span class="seat-box">3</span></label>
+
+              <label class="seat"><input type="checkbox" value="A4"><span class="seat-box">4</span></label>
+
+              <label class="seat"><input type="checkbox" value="A5"><span class="seat-box">5</span></label>
+              <label class="seat"><input type="checkbox" value="A6"><span class="seat-box">6</span></label>
+              <label class="seat"><input type="checkbox" value="A7"><span class="seat-box">7</span></label>
+              <label class="seat"><input type="checkbox" value="A8"><span class="seat-box">8</span></label>
+              <label class="seat"><input type="checkbox" value="A9"><span class="seat-box">9</span></label>
+              <label class="seat"><input type="checkbox" value="A10"><span class="seat-box">10</span></label>
+            </div>
+
+            <div class="seat-row">
+              <span class="row-letter">B</span>
+              <label class="seat"><input type="checkbox" value="B1"><span class="seat-box">1</span></label>
+              <label class="seat"><input type="checkbox" value="B2"><span class="seat-box">2</span></label>
+              <label class="seat"><input type="checkbox" value="B3"><span class="seat-box">3</span></label>
+              <label class="seat"><input type="checkbox" value="B4"><span class="seat-box">4</span></label>
+              <label class="seat"><input type="checkbox" value="B5"><span class="seat-box">5</span></label>
+              <label class="seat"><input type="checkbox" value="B6"><span class="seat-box">6</span></label>
+              <label class="seat"><input type="checkbox" value="B7"><span class="seat-box">7</span></label>
+              <label class="seat"><input type="checkbox" value="B8"><span class="seat-box">8</span></label>
+              <label class="seat"><input type="checkbox" value="B9"><span class="seat-box">9</span></label>
+              <label class="seat"><input type="checkbox" value="B10"><span class="seat-box">10</span></label>
+            </div>
+
+            <div class="seat-row">
+              <span class="row-letter">C</span>
+              <label class="seat"><input type="checkbox" value="C1"><span class="seat-box">1</span></label>
+              <label class="seat"><input type="checkbox" value="C2"><span class="seat-box">2</span></label>
+              <label class="seat"><input type="checkbox" value="C3"><span class="seat-box">3</span></label>
+              <label class="seat"><input type="checkbox" value="C4"><span class="seat-box">4</span></label>
+              <label class="seat"><input type="checkbox" value="C5"><span class="seat-box">5</span></label>
+              <label class="seat"><input type="checkbox" value="C6"><span class="seat-box">6</span></label>
+              <label class="seat"><input type="checkbox" value="C7"><span class="seat-box">7</span></label>
+              <label class="seat"><input type="checkbox" value="C8"><span class="seat-box">8</span></label>
+              <label class="seat"><input type="checkbox" value="C9"><span class="seat-box">9</span></label>
+              <label class="seat"><input type="checkbox" value="C10"><span class="seat-box">10</span></label>
+            </div>
+
+            <div class="seat-row">
+              <span class="row-letter">D</span>
+              <label class="seat"><input type="checkbox" value="D1"><span class="seat-box">1</span></label>
+              <label class="seat"><input type="checkbox" value="D2"><span class="seat-box">2</span></label>
+              <label class="seat"><input type="checkbox" value="D3"><span class="seat-box">3</span></label>
+              <label class="seat"><input type="checkbox" value="D4"><span class="seat-box">4</span></label>
+              <label class="seat"><input type="checkbox" value="D5"><span class="seat-box">5</span></label>
+              <label class="seat"><input type="checkbox" value="D6"><span class="seat-box">6</span></label>
+              <label class="seat"><input type="checkbox" value="D7"><span class="seat-box">7</span></label>
+              <label class="seat"><input type="checkbox" value="D8"><span class="seat-box">8</span></label>
+              <label class="seat"><input type="checkbox" value="D9"><span class="seat-box">9</span></label>
+              <label class="seat"><input type="checkbox" value="D10"><span class="seat-box">10</span></label>
+            </div>
+
+            <div class="seat-row">
+              <span class="row-letter">E</span>
+              <label class="seat"><input type="checkbox" value="E1"><span class="seat-box">1</span></label>
+              <label class="seat"><input type="checkbox" value="E2"><span class="seat-box">2</span></label>
+              <label class="seat"><input type="checkbox" value="E3"><span class="seat-box">3</span></label>
+              <label class="seat"><input type="checkbox" value="E4"><span class="seat-box">4</span></label>
+              <label class="seat"><input type="checkbox" value="E5"><span class="seat-box">5</span></label>
+              <label class="seat"><input type="checkbox" value="E6"><span class="seat-box">6</span></label>
+              <label class="seat"><input type="checkbox" value="E7"><span class="seat-box">7</span></label>
+              <label class="seat"><input type="checkbox" value="E8"><span class="seat-box">8</span></label>
+              <label class="seat"><input type="checkbox" value="E9"><span class="seat-box">9</span></label>
+              <label class="seat"><input type="checkbox" value="E10"><span class="seat-box">10</span></label>
+            </div>
+
+            <div class="seat-row">
+              <span class="row-letter">F</span>
+              <label class="seat"><input type="checkbox" value="F1"><span class="seat-box">1</span></label>
+              <label class="seat"><input type="checkbox" value="F2"><span class="seat-box">2</span></label>
+              <label class="seat"><input type="checkbox" value="F3"><span class="seat-box">3</span></label>
+              <label class="seat"><input type="checkbox" value="F4"><span class="seat-box">4</span></label>
+              <label class="seat"><input type="checkbox" value="F5"><span class="seat-box">5</span></label>
+              <label class="seat"><input type="checkbox" value="F6"><span class="seat-box">6</span></label>
+              <label class="seat"><input type="checkbox" value="F7"><span class="seat-box">7</span></label>
+              <label class="seat"><input type="checkbox" value="F8"><span class="seat-box">8</span></label>
+              <label class="seat"><input type="checkbox" value="F9"><span class="seat-box">9</span></label>
+              <label class="seat"><input type="checkbox" value="F10"><span class="seat-box">10</span></label>
+            </div>
+
+            <div class="seat-row">
+              <span class="row-letter">G</span>
+              <label class="seat"><input type="checkbox" value="G1"><span class="seat-box">1</span></label>
+              <label class="seat"><input type="checkbox" value="G2"><span class="seat-box">2</span></label>
+              <label class="seat"><input type="checkbox" value="G3"><span class="seat-box">3</span></label>
+              <label class="seat"><input type="checkbox" value="G4"><span class="seat-box">4</span></label>
+              <label class="seat"><input type="checkbox" value="G5"><span class="seat-box">5</span></label>
+              <label class="seat"><input type="checkbox" value="G6"><span class="seat-box">6</span></label>
+              <label class="seat"><input type="checkbox" value="G7"><span class="seat-box">7</span></label>
+              <label class="seat"><input type="checkbox" value="G8"><span class="seat-box">8</span></label>
+              <label class="seat"><input type="checkbox" value="G9"><span class="seat-box">9</span></label>
+              <label class="seat"><input type="checkbox" value="G10"><span class="seat-box">10</span></label>
+            </div>
+
+          </div>
+
+          <h3>Pre-order Your Snacks</h3>
+          <p class="snacks-note">Skip the queue. Your snacks are ready at the counter when you arrive.</p>
+
+          <div id="snack-groups">
+
+            <p class="snack-heading">Popcorn</p>
+            <div class="snack-list">
+              <label class="snack">
+                <input type="checkbox" value="1"
+                       data-name="Popcorn, Regular" data-price="12000">
+                <span class="snack-box">
+                  <span><span class="snack-name">Popcorn, Regular</span></span>
+                  <span class="snack-price">&#8369;120</span>
+                </span>
+              </label>
+              <label class="snack">
+                <input type="checkbox" value="2"
+                       data-name="Popcorn, Large" data-price="16000">
+                <span class="snack-box">
+                  <span><span class="snack-name">Popcorn, Large</span></span>
+                  <span class="snack-price">&#8369;160</span>
+                </span>
+              </label>
+            </div>
+
+            <p class="snack-heading">Drinks</p>
+            <div class="snack-list">
+              <label class="snack">
+                <input type="checkbox" value="3"
+                       data-name="Soda, Regular" data-price="7000">
+                <span class="snack-box">
+                  <span><span class="snack-name">Soda, Regular</span></span>
+                  <span class="snack-price">&#8369;70</span>
+                </span>
+              </label>
+              <label class="snack">
+                <input type="checkbox" value="4"
+                       data-name="Soda, Large" data-price="9500">
+                <span class="snack-box">
+                  <span><span class="snack-name">Soda, Large</span></span>
+                  <span class="snack-price">&#8369;95</span>
+                </span>
+              </label>
+            </div>
+
+            <p class="snack-heading">Candy</p>
+            <div class="snack-list">
+              <label class="snack">
+                <input type="checkbox" value="5"
+                       data-name="Chocolate Bar" data-price="6000">
+                <span class="snack-box">
+                  <span><span class="snack-name">Chocolate Bar</span></span>
+                  <span class="snack-price">&#8369;60</span>
+                </span>
+              </label>
+              <label class="snack">
+                <input type="checkbox" value="6"
+                       data-name="Gummy Candy" data-price="5500">
+                <span class="snack-box">
+                  <span><span class="snack-name">Gummy Candy</span></span>
+                  <span class="snack-price">&#8369;55</span>
+                </span>
+              </label>
+            </div>
+
+            <p class="snack-heading">Combos</p>
+            <div class="snack-list">
+              <label class="snack">
+                <input type="checkbox" value="7"
+                       data-name="Solo Combo" data-price="18000">
+                <span class="snack-box">
+                  <span><span class="snack-name">Solo Combo</span></span>
+                  <span class="snack-price">&#8369;180</span>
+                </span>
+              </label>
+              <label class="snack">
+                <input type="checkbox" value="8"
+                       data-name="Barkada Combo" data-price="48000">
+                <span class="snack-box">
+                  <span><span class="snack-name">Barkada Combo</span></span>
+                  <span class="snack-price">&#8369;480</span>
+                </span>
+              </label>
+            </div>
+
+          </div>
+
+          <div class="order-summary">
+
+            <div class="summary-line">
+              <span class="summary-name">Date and showtime</span>
+              <span class="summary-value" id="summary-when">Choose a date and showtime</span>
+            </div>
+
+            <div class="summary-line">
+              <span class="summary-name">Selected seats</span>
+              <span class="summary-value" id="summary-seats">Tap the seats above</span>
+            </div>
+
+            <div class="summary-line">
+              <span class="summary-name">Snacks</span>
+              <span class="summary-value" id="summary-snacks">Tick any items above</span>
+            </div>
+
+            <div class="summary-line summary-total">
+              <span class="summary-name" id="summary-tickets">0 tickets &times; &#8369;220</span>
+              <span class="summary-amount" id="summary-amount">&#8369;0</span>
+            </div>
+
+            <p class="form-message hidden" id="booking-message"></p>
+
+            <button class="button button-red" type="button" id="confirm">Confirm Booking</button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="logo" href="index.html">CINEMAX</a>
+      <p class="footer-text">
+        Your next movie experience starts here. <br>
+        Book your seats, enjoy your snacks, and let the show begin.
+      </p>
+      <p class="footer-copyright">&copy; 2026 Cinemax. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/book.js"></script>
+</body>
+</html>

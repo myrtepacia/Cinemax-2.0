@@ -4,471 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Staff Dashboard - Cinemax</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
-
-  <style>
-
-    /* Styles that every page of the website uses */
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background-color: #f9fafb;
-      color: #101828;
-      font-family: 'Outfit', Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    h1, h2, h3 {
-      margin: 0;
-      font-weight: 900;
-      line-height: 1.2;
-    }
-
-    p {
-      margin: 0;
-    }
-
-    a {
-      color: #fb2c36;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    /* Buttons */
-
-    .button {
-      display: inline-block;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 12px;
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .button-red {
-      background-color: #fb2c36;
-      color: #ffffff;
-    }
-
-    .button-red:hover {
-      background-color: #e7000b;
-    }
-
-    .button-outline {
-      background-color: #ffffff;
-      color: #101828;
-      border: 1px solid #e5e7eb;
-      font-weight: 600;
-    }
-
-    .button-outline:hover {
-      background-color: #f9fafb;
-    }
-
-    .button-grey {
-      background-color: #e5e7eb;
-      color: #99a1af;
-    }
-
-    .button-wide {
-      display: block;
-      width: 100%;
-    }
-
-    /* Top bar */
-
-    .top-bar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background-color: #ffffff;
-      border-bottom: 1px solid #f3f4f6;
-    }
-
-    .top-bar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      max-width: 1280px;
-      width: 96%;
-      height: 64px;
-      margin: 0 auto;
-    }
-
-    .logo {
-      color: #101828;
-      font-size: 20px;
-      font-weight: 900;
-      text-decoration: none;
-    }
-
-    .menu {
-      display: flex;
-      gap: 2px;
-    }
-
-    .menu a {
-      padding: 8px 16px;
-      border-radius: 12px;
-      color: #6a7282;
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .menu a:hover {
-      background-color: #f9fafb;
-      color: #101828;
-    }
-
-    .menu a.current {
-      background-color: #fef2f2;
-      color: #fb2c36;
-    }
-
-    .auth-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
-    /* Footer */
-
-    .site-footer {
-      background-color: #ffffff;
-      border-top: 1px solid #e5e7eb;
-      padding: 36px 20px 28px 20px;
-    }
-
-    .footer-inner {
-      max-width: 620px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .footer-inner .logo {
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-
-    .footer-text {
-      color: #6a7282;
-      font-size: 13px;
-    }
-
-    .footer-copyright {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid #f3f4f6;
-      color: #99a1af;
-      font-size: 12px;
-    }
-
-    @media (max-width: 620px) {
-      .top-bar-inner {
-        width: 94%;
-        height: 58px;
-        gap: 4px;
-      }
-
-      .logo {
-        font-size: 15px;
-      }
-
-      .menu a {
-        padding: 6px 5px;
-        font-size: 12px;
-      }
-
-      .auth-buttons .button {
-        padding: 8px 12px;
-        font-size: 13px;
-      }
-
-      .menu a,
-      .auth-buttons .button {
-        white-space: nowrap;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .logo {
-        font-size: 14px;
-      }
-
-      .menu a {
-        padding: 6px 2px;
-        font-size: 11px;
-      }
-
-      .auth-buttons .button {
-        padding: 7px 10px;
-        font-size: 12px;
-      }
-    }
-
-    /* Styles used on the two staff pages */
-
-    .admin-page {
-      max-width: 900px;
-      width: 92%;
-      margin: 0 auto;
-      padding: 40px 0 64px 0;
-    }
-
-    .admin-page h1 {
-      font-size: 32px;
-      margin-bottom: 6px;
-    }
-
-    .admin-intro {
-      color: #6a7282;
-      font-size: 15px;
-      margin-bottom: 20px;
-    }
-
-    /* The staff menu */
-
-    .admin-menu {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-
-    .admin-menu a {
-      padding: 10px 18px;
-      background-color: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      color: #6a7282;
-      font-size: 14px;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .admin-menu a:hover {
-      border-color: #fb2c36;
-      color: #fb2c36;
-    }
-
-    .admin-menu a.current {
-      background-color: #fb2c36;
-      border-color: #fb2c36;
-      color: #ffffff;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    /* The white boxes */
-
-    .panel {
-      padding: 24px;
-      background-color: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-      margin-bottom: 24px;
-    }
-
-    .panel h2 {
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
-
-    .panel-note {
-      color: #6a7282;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-
-    /* The number boxes across the top */
-
-    .stat-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .stat {
-      flex: 1;
-      min-width: 180px;
-      padding: 20px;
-      background-color: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-    }
-
-    .stat-name {
-      color: #99a1af;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .stat-figure {
-      font-size: 26px;
-      font-weight: 900;
-      margin-top: 6px;
-    }
-
-    .stat-extra {
-      color: #6a7282;
-      font-size: 12px;
-    }
-
-    .stat-money {
-      background-color: #fef2f2;
-      border-color: #ffd5d7;
-    }
-
-    .stat-money .stat-name,
-    .stat-money .stat-figure {
-      color: #fb2c36;
-    }
-
-    /* The three snack order groups */
-
-    .order-group {
-      padding-top: 18px;
-      margin-top: 18px;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    .order-group-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 16px;
-      margin-bottom: 4px;
-    }
-
-    .order-count {
-      padding: 1px 10px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .count-ready {
-      background-color: #dcfce7;
-      color: #036e46;
-    }
-
-    .count-preparing {
-      background-color: #fef9c3;
-      color: #854d0e;
-    }
-
-    .count-sold {
-      background-color: #f3f4f6;
-      color: #4a5565;
-    }
-
-    .empty-note {
-      padding: 10px 0 2px 0;
-      color: #99a1af;
-      font-size: 14px;
-    }
-
-    /* One order inside a group */
-
-    .order-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px 16px;
-      padding: 14px 0 14px 0;
-      border-top: 1px solid #f3f4f6;
-    }
-
-    .order-left {
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .order-items {
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .order-who {
-      color: #4a5565;
-      font-size: 13px;
-    }
-
-    .order-price {
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    .order-status {
-      padding: 7px 10px;
-      background-color: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 700;
-      color: #101828;
-      cursor: pointer;
-    }
-
-    .order-status:hover {
-      border-color: #fb2c36;
-    }
-
-    .order-status:focus {
-      outline: none;
-      border-color: #fb2c36;
-    }
-
-    .sold-tag {
-      padding: 7px 14px;
-      border-radius: 999px;
-      background-color: #f3f4f6;
-      color: #4a5565;
-      font-size: 13px;
-      font-weight: 700;
-    }
-  </style>
+  <link rel="stylesheet" href="cinemax.css">
 </head>
 <body>
 
-  <!-- Top bar -->
   <header class="top-bar">
     <div class="top-bar-inner">
-
       <a class="logo" href="index.html">CINEMAX</a>
-
-      <nav class="menu">
-        <a href="index.html#now-showing">Now Showing</a>
-        <a href="index.html#coming-soon">Upcoming Shows</a>
-        <!-- Staff page link, hidden from customers
-        <a href="admin.html">Admin</a>
-        -->
-      </nav>
-
+      <nav class="menu"></nav>
       <div class="auth-buttons">
-        <a class="button button-red" href="signup.html">Sign Up</a>
+        <button class="button button-red" type="button" id="sign-out">Sign Out</button>
       </div>
-
     </div>
   </header>
 
@@ -477,136 +27,135 @@
     <h1>Staff Dashboard</h1>
     <p class="admin-intro">Earnings and snack orders.</p>
 
-    <!-- Staff menu -->
     <nav class="admin-menu">
-      <a href="admin.html" class="current">Staff Dashboard</a>
+      <a href="admin.html" class="current">Dashboard</a>
       <a href="admin-movies.html">Movies</a>
-      <a href="admin-scanner.html">Ticket Scanner</a>
+      <a href="admin-scanner.html">Scanner</a>
     </nav>
 
-    <!-- Earnings -->
+    <p class="form-message hidden" id="page-message"></p>
+
     <div class="stat-row">
 
       <div class="stat stat-money">
         <p class="stat-name">Total Revenue</p>
-        <p class="stat-figure">₱3,160</p>
+        <p class="stat-figure" id="total-revenue">&#8369;48,260</p>
         <p class="stat-extra">Tickets plus snacks</p>
       </div>
 
       <div class="stat">
         <p class="stat-name">Ticket Sales</p>
-        <p class="stat-figure">₱1,820</p>
-        <p class="stat-extra">8 tickets sold</p>
+        <p class="stat-figure" id="ticket-revenue">&#8369;39,600</p>
+        <p class="stat-extra" id="tickets-sold">180 tickets sold</p>
       </div>
 
       <div class="stat">
         <p class="stat-name">Snack Sales</p>
-        <p class="stat-figure">₱1,340</p>
-        <p class="stat-extra">9 snacks sold</p>
+        <p class="stat-figure" id="snack-revenue">&#8369;8,660</p>
+        <p class="stat-extra" id="snacks-sold">74 snacks sold</p>
       </div>
 
     </div>
 
-    <!-- Snack orders -->
     <section class="panel">
 
       <h2>Snack orders</h2>
-      <p class="panel-note">Change the dropdown on an order and it moves to that group. 9 snacks in total.</p>
+      <p class="panel-note" id="orders-note">
+        Change the dropdown on an order and it moves to that group. 9 snacks in total.
+      </p>
 
-      <!-- Ready: the food is done and waiting at the counter -->
+      <p class="loading-note hidden" id="orders-loading">Loading the counter queue&hellip;</p>
+
       <div class="order-group">
-        <h3 class="order-group-title">Ready <span class="order-count count-ready" id="count-ready">2</span></h3>
+
+        <h3 class="order-group-title">
+          Preparing
+          <span class="order-count count-preparing" id="count-preparing">2</span>
+        </h3>
+
+        <p class="empty-note hidden" id="empty-preparing">Nothing being prepared</p>
+
+        <div id="group-preparing">
+
+          <div class="order-row" data-order-id="41">
+            <div class="order-left">
+              <p class="order-items">Popcorn, Large &times;2, Soda, Large</p>
+              <p class="order-who">CMX-8F41K2 &bull; Juan Dela Cruz &bull; 3 snacks</p>
+            </div>
+            <p class="order-price">&#8369;415</p>
+            <select class="order-status">
+              <option value="preparing" selected>Preparing</option>
+              <option value="ready">Ready</option>
+            </select>
+          </div>
+
+          <div class="order-row" data-order-id="42">
+            <div class="order-left">
+              <p class="order-items">Barkada Combo</p>
+              <p class="order-who">CMX-7B93L5 &bull; Maria Santos &bull; 1 snack</p>
+            </div>
+            <p class="order-price">&#8369;480</p>
+            <select class="order-status">
+              <option value="preparing" selected>Preparing</option>
+              <option value="ready">Ready</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="order-group">
+
+        <h3 class="order-group-title">
+          Ready
+          <span class="order-count count-ready" id="count-ready">1</span>
+        </h3>
+
         <p class="empty-note hidden" id="empty-ready">Nothing waiting at the counter</p>
 
         <div id="group-ready">
 
-          <div class="order-row">
+          <div class="order-row" data-order-id="39">
             <div class="order-left">
-              <p class="order-items">Solo Combo, Gummy Candy</p>
-              <p class="order-who">CX-8F3K92LM • Juan Dela Cruz • 2 snacks</p>
+              <p class="order-items">Solo Combo, Chocolate Bar</p>
+              <p class="order-who">CMX-3D07Q9 &bull; Ana Reyes &bull; 2 snacks</p>
             </div>
-            <p class="order-price">₱235</p>
+            <p class="order-price">&#8369;240</p>
             <select class="order-status">
-              <option>Preparing</option>
-              <option selected>Ready</option>
-              <option>Sold</option>
+              <option value="ready" selected>Ready</option>
+              <option value="sold">Sold</option>
             </select>
-            <span class="sold-tag hidden">Sold</span>
-          </div>
-
-          <div class="order-row">
-            <div class="order-left">
-              <p class="order-items">Popcorn Large, Soda Large</p>
-              <p class="order-who">CX-2B7Q41XT • Maria Santos • 2 snacks</p>
-            </div>
-            <p class="order-price">₱255</p>
-            <select class="order-status">
-              <option>Preparing</option>
-              <option selected>Ready</option>
-              <option>Sold</option>
-            </select>
-            <span class="sold-tag hidden">Sold</span>
           </div>
 
         </div>
       </div>
 
-      <!-- Preparing: the kitchen is still making the food -->
       <div class="order-group">
-        <h3 class="order-group-title">Preparing <span class="order-count count-preparing" id="count-preparing">2</span></h3>
-        <p class="empty-note hidden" id="empty-preparing">Nothing being made right now</p>
 
-        <div id="group-preparing">
+        <h3 class="order-group-title">
+          Sold
+          <span class="order-count count-sold" id="count-sold">2</span>
+        </h3>
 
-          <div class="order-row">
-            <div class="order-left">
-              <p class="order-items">Barkada Combo</p>
-              <p class="order-who">CX-9H5V63PD • Ana Reyes • 1 snack</p>
-            </div>
-            <p class="order-price">₱480</p>
-            <select class="order-status">
-              <option selected>Preparing</option>
-              <option>Ready</option>
-              <option>Sold</option>
-            </select>
-            <span class="sold-tag hidden">Sold</span>
-          </div>
-
-          <div class="order-row">
-            <div class="order-left">
-              <p class="order-items">Popcorn Regular, Soda Regular</p>
-              <p class="order-who">CX-4C8N27RB • Mark Villanueva • 2 snacks</p>
-            </div>
-            <p class="order-price">₱190</p>
-            <select class="order-status">
-              <option selected>Preparing</option>
-              <option>Ready</option>
-              <option>Sold</option>
-            </select>
-            <span class="sold-tag hidden">Sold</span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Sold: the customer has already picked the food up -->
-      <div class="order-group">
-        <h3 class="order-group-title">Sold <span class="order-count count-sold" id="count-sold">1</span></h3>
-        <p class="empty-note hidden" id="empty-sold">No orders picked up yet</p>
+        <p class="empty-note hidden" id="empty-sold">Nothing handed over yet</p>
 
         <div id="group-sold">
 
-          <div class="order-row">
+          <div class="order-row" data-order-id="35">
             <div class="order-left">
-              <p class="order-items">Chocolate Bar, Popcorn Regular</p>
-              <p class="order-who">CX-6J1T95WF • Liza Bautista • 2 snacks</p>
+              <p class="order-items">Popcorn, Regular, Gummy Candy</p>
+              <p class="order-who">CMX-5A22M6 &bull; Paolo Cruz &bull; 2 snacks</p>
             </div>
-            <p class="order-price">₱180</p>
-            <select class="order-status hidden">
-              <option>Preparing</option>
-              <option>Ready</option>
-              <option selected>Sold</option>
-            </select>
+            <p class="order-price">&#8369;175</p>
+            <span class="sold-tag">Sold</span>
+          </div>
+
+          <div class="order-row" data-order-id="33">
+            <div class="order-left">
+              <p class="order-items">Soda, Regular</p>
+              <p class="order-who">CMX-1K55T8 &bull; Liza Bautista &bull; 1 snack</p>
+            </div>
+            <p class="order-price">&#8369;70</p>
             <span class="sold-tag">Sold</span>
           </div>
 
@@ -617,79 +166,18 @@
 
   </main>
 
-  <script>
-
-    var readyList = document.getElementById("group-ready");
-    var preparingList = document.getElementById("group-preparing");
-    var soldList = document.getElementById("group-sold");
-
-    var readyCount = document.getElementById("count-ready");
-    var preparingCount = document.getElementById("count-preparing");
-    var soldCount = document.getElementById("count-sold");
-
-    var readyEmpty = document.getElementById("empty-ready");
-    var preparingEmpty = document.getElementById("empty-preparing");
-    var soldEmpty = document.getElementById("empty-sold");
-
-    var statusBoxes = document.querySelectorAll(".order-status");
-    var i;
-
-    // Write how many orders a group holds, and say so when it is empty
-    function refreshGroup(list, count, empty) {
-      count.textContent = list.children.length;
-
-      if (list.children.length === 0) {
-        empty.classList.remove("hidden");
-      } else {
-        empty.classList.add("hidden");
-      }
-    }
-
-    function refreshAll() {
-      refreshGroup(readyList, readyCount, readyEmpty);
-      refreshGroup(preparingList, preparingCount, preparingEmpty);
-      refreshGroup(soldList, soldCount, soldEmpty);
-    }
-
-    // Move the order into the group the staff picked
-    function moveOrder() {
-      var row = this.parentNode;
-
-      if (this.value === "Ready") {
-        readyList.appendChild(row);
-      } else if (this.value === "Preparing") {
-        preparingList.appendChild(row);
-      } else {
-        soldList.appendChild(row);
-        this.classList.add("hidden");
-        row.querySelector(".sold-tag").classList.remove("hidden");
-      }
-
-      refreshAll();
-    }
-
-    for (i = 0; i < statusBoxes.length; i++) {
-      statusBoxes[i].onchange = moveOrder;
-    }
-
-    refreshAll();
-
-  </script>
-  <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-inner">
-
       <a class="logo" href="index.html">CINEMAX</a>
-
       <p class="footer-text">
         Your next movie experience starts here. <br>
         Book your seats, enjoy your snacks, and let the show begin.
       </p>
-
-      <p class="footer-copyright">© 2026 Cinemax. All rights reserved.</p>
-
+      <p class="footer-copyright">&copy; 2026 Cinemax. All rights reserved.</p>
     </div>
   </footer>
 
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
 </body>
 </html>

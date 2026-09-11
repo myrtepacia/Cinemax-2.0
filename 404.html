@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In - Cinemax</title>
+  <title>Page not found - Cinemax</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,39 +26,17 @@
     </div>
   </header>
 
-  <main class="form-page">
-    <div class="form-card">
+  <main class="admin-page">
+    <div class="panel">
 
-      <h1>Welcome back</h1>
-      <p class="form-intro">Sign in to book your seats.</p>
-
-      <p class="form-message form-message-error hidden" id="form-message">
-        That email and password do not match an account.
+      <p class="empty-state">
+        <strong>We could not find that page</strong>
+        The address may be mistyped, or the page may have moved.
       </p>
 
-      <form id="signin-form" novalidate>
-
-        <div class="form-field">
-          <label for="email">Email address</label>
-          <input id="email" name="email" type="email"
-                 placeholder="juandelacruz@gmail.com"
-                 autocomplete="email" required>
-        </div>
-
-        <div class="form-field">
-          <label for="password">Password</label>
-          <div class="password-field">
-            <input id="password" name="password" type="password"
-                   autocomplete="current-password" required>
-            <button class="password-toggle" type="button" aria-pressed="false" hidden>Show</button>
-          </div>
-        </div>
-
-        <button class="button button-red" type="submit" id="submit">Sign In</button>
-
-      </form>
-
-      <p class="form-switch">Don't have an account? <a href="signup.html" id="signup-link">Create account</a></p>
+      <p style="text-align: center;">
+        <a class="button button-red" href="index.html">Back to movies</a>
+      </p>
 
     </div>
   </main>

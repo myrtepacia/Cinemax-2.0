@@ -4,295 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terms of Service - Cinemax</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
-
-  <style>
-
-    /* Styles that every page of the website uses */
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background-color: #f9fafb;
-      color: #101828;
-      font-family: 'Outfit', Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    h1, h2, h3 {
-      margin: 0;
-      font-weight: 900;
-      line-height: 1.2;
-    }
-
-    p {
-      margin: 0;
-    }
-
-    a {
-      color: #fb2c36;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    /* Buttons */
-
-    .button {
-      display: inline-block;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 12px;
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .button-red {
-      background-color: #fb2c36;
-      color: #ffffff;
-    }
-
-    .button-red:hover {
-      background-color: #e7000b;
-    }
-
-    .button-outline {
-      background-color: #ffffff;
-      color: #101828;
-      border: 1px solid #e5e7eb;
-      font-weight: 600;
-    }
-
-    .button-outline:hover {
-      background-color: #f9fafb;
-    }
-
-    .button-grey {
-      background-color: #e5e7eb;
-      color: #99a1af;
-    }
-
-    .button-wide {
-      display: block;
-      width: 100%;
-    }
-
-    /* Top bar */
-
-    .top-bar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background-color: #ffffff;
-      border-bottom: 1px solid #f3f4f6;
-    }
-
-    .top-bar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      max-width: 1280px;
-      width: 96%;
-      height: 64px;
-      margin: 0 auto;
-    }
-
-    .logo {
-      color: #101828;
-      font-size: 20px;
-      font-weight: 900;
-      text-decoration: none;
-    }
-
-    .menu {
-      display: flex;
-      gap: 2px;
-    }
-
-    .menu a {
-      padding: 8px 16px;
-      border-radius: 12px;
-      color: #6a7282;
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .menu a:hover {
-      background-color: #f9fafb;
-      color: #101828;
-    }
-
-    .menu a.current {
-      background-color: #fef2f2;
-      color: #fb2c36;
-    }
-
-    .auth-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
-    /* Footer */
-
-    .site-footer {
-      background-color: #ffffff;
-      border-top: 1px solid #e5e7eb;
-      padding: 36px 20px 28px 20px;
-    }
-
-    .footer-inner {
-      max-width: 620px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .footer-inner .logo {
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-
-    .footer-text {
-      color: #6a7282;
-      font-size: 13px;
-    }
-
-    .footer-copyright {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid #f3f4f6;
-      color: #99a1af;
-      font-size: 12px;
-    }
-
-    @media (max-width: 620px) {
-      .top-bar-inner {
-        width: 94%;
-        height: 58px;
-        gap: 4px;
-      }
-
-      .logo {
-        font-size: 15px;
-      }
-
-      .menu a {
-        padding: 6px 5px;
-        font-size: 12px;
-      }
-
-      .auth-buttons .button {
-        padding: 8px 12px;
-        font-size: 13px;
-      }
-
-      .menu a,
-      .auth-buttons .button {
-        white-space: nowrap;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .logo {
-        font-size: 14px;
-      }
-
-      .menu a {
-        padding: 6px 2px;
-        font-size: 11px;
-      }
-
-      .auth-buttons .button {
-        padding: 7px 10px;
-        font-size: 12px;
-      }
-    }
-
-    /* Styles used only on this terms page */
-
-    .terms-page {
-      max-width: 768px;
-      width: 92%;
-      margin: 0 auto;
-      padding: 48px 0 64px 0;
-    }
-
-    .terms-page h1 {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    .terms-intro {
-      color: #6a7282;
-      font-size: 15px;
-      margin-bottom: 28px;
-    }
-
-    .terms-block {
-      padding: 24px 24px 14px 24px;
-      background-color: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-      margin-bottom: 14px;
-    }
-
-    .terms-kind {
-      display: block;
-      color: #fb2c36;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .terms-kind-snack {
-      color: #4f39f6;
-    }
-
-    .terms-block h2 {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .terms-block p {
-      color: #6a7282;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="cinemax.css">
 </head>
 <body>
 
-  <!-- Top bar -->
   <header class="top-bar">
     <div class="top-bar-inner">
-
       <a class="logo" href="index.html">CINEMAX</a>
-
       <nav class="menu">
         <a href="index.html#now-showing">Now Showing</a>
         <a href="index.html#coming-soon">Upcoming Shows</a>
-        <!-- Staff page link, hidden from customers
-        <a href="admin.html">Admin</a>
-        -->
       </nav>
-
       <div class="auth-buttons">
+        <a class="button button-outline" href="signin.html">Sign In</a>
         <a class="button button-red" href="signup.html">Sign Up</a>
       </div>
-
     </div>
   </header>
 
@@ -343,21 +73,17 @@
 
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-inner">
-
       <a class="logo" href="index.html">CINEMAX</a>
-
       <p class="footer-text">
         Your next movie experience starts here. <br>
         Book your seats, enjoy your snacks, and let the show begin.
       </p>
-
-      <p class="footer-copyright">© 2026 Cinemax. All rights reserved.</p>
-
+      <p class="footer-copyright">&copy; 2026 Cinemax. All rights reserved.</p>
     </div>
   </footer>
 
+  <script src="js/common.js"></script>
 </body>
 </html>
